@@ -3,31 +3,31 @@
 (function () {
   'use strict';
 
-  var rawToken = '';
-  var parsedToken = '';
+  let rawToken = '';
+  let parsedToken = '';
 
-  var getItemSpinnerElement = null;
-  var getItemSpinner = null;
-  var updateItemSpinnerElement = null;
-  var updateItemSpinner = null;
+  let getItemSpinnerElement = null;
+  let getItemSpinner = null;
+  let updateItemSpinnerElement = null;
+  let updateItemSpinner = null;
 
-  var markUnreadPayload = { IsRead: false };
-  var flagFollowupPayload = { Flag: { FlagStatus: 'Flagged' } };
-  var applyCategoryPayload = { Categories: ['Red Category'] };
+  let markUnreadPayload = { IsRead: false };
+  let flagFollowupPayload = { Flag: { FlagStatus: 'Flagged' } };
+  let applyCategoryPayload = { Categories: ['Red Category'] };
 
   // The Office initialize function must be run each time a new page is loaded
   Office.initialize = function (reason) {
       $(document).ready(function () {
           app.initialize();
-          var PivotElements = document.querySelectorAll('.ms-Pivot');
-          for(var i = 0; i < PivotElements.length; i++) {
-            new fabric['Pivot'](PivotElements[i]);
-          }
+          const PivotElements = document.querySelectorAll('.ms-Pivot');
+          PivotElements.forEach(element => {
+            new fabric['Pivot'](element);
+          });
 
-          var ToggleElements = document.querySelectorAll('.ms-Toggle');
-          for(var i = 0; i < ToggleElements.length; i++) {
-              new fabric['Toggle'](ToggleElements[i]);
-          }
+          const ToggleElements = document.querySelectorAll('.ms-Toggle');
+          ToggleElements.forEach(element => {
+            new fabric['Toggle'](element);
+          });
 
           getItemSpinnerElement = document.querySelector('.get-item-spinner');
           getItemSpinner = new fabric['Spinner'](getItemSpinnerElement);
@@ -37,13 +37,13 @@
           updateItemSpinner = new fabric['Spinner'](updateItemSpinnerElement);
           updateItemSpinner.stop();
 
-          var DropdownHTMLElements = document.querySelectorAll('.ms-Dropdown');
-          for (var i = 0; i < DropdownHTMLElements.length; ++i) {
-            var Dropdown = new fabric['Dropdown'](DropdownHTMLElements[i]);
-          }
+          const DropdownHTMLElements = document.querySelectorAll('.ms-Dropdown');
+          DropdownHTMLElements.forEach(element => {
+            new fabric['Dropdown'](element);
+          });
 
           $('.change-select').change(function() {
-            var newValue = $('.change-dropdown .ms-Dropdown-title').first().text();
+            const newValue = $('.change-dropdown .ms-Dropdown-title').first().text();
             loadItemChangePayload(newValue);
           });
 
@@ -68,7 +68,7 @@
     $('.hostversion').text(Office.context.mailbox.diagnostics.hostVersion);
     $('.owaview').text(Office.context.mailbox.diagnostics.OWAView);
 
-    var restId = '';
+    let restId = '';
     if (Office.context.mailbox.diagnostics.hostName !== 'OutlookIOS') {
       // Loaded in non-mobile context, so ID needs to be converted
       restId = Office.context.mailbox.convertToRestId(
@@ -81,7 +81,7 @@
 
     // Build the URL to the item
     //var itemUrl = Office.context.mailbox.restUrl + 
-    var itemUrl = 'https://outlook.office.com' +
+    const itemUrl = 'https://outlook.office.com' +
       '/api/beta/me/messages/' + restId;
 
     $('.resturl-display code').text(itemUrl);
@@ -98,7 +98,7 @@
   }
 
   function loadToken(parseToken) {
-    var code = $('.token-display code');
+    const code = $('.token-display code');
     if (rawToken === 'error') {
       code.text('ERROR RETRIEVING TOKEN');
       return;
@@ -116,7 +116,7 @@
   }
 
   function getItemViaRest() {
-    var itemUrl = $('.resturl-display code').text();
+    let itemUrl = $('.resturl-display code').text();
 
     toggleGetItemSpinner(true);
     

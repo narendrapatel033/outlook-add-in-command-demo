@@ -7,7 +7,7 @@
 
   // The initialize function must be run each time a new page is loaded
   Office.initialize = function (reason) {
-    $(document).ready(function () {
+    $(document).ready( () => {
       app.initialize();
 
       $('#insertDefault').click(insertDefault);
@@ -23,7 +23,7 @@
     Office.context.mailbox.item.body.setSelectedDataAsync(
       textToInsert, 
       { coercionType: Office.CoercionType.Text }, 
-      function (asyncResult) {
+       (asyncResult) => {
         // Display the result to the user
         if (asyncResult.status == Office.AsyncResultStatus.Succeeded) {
           app.showNotification("Success", "\"" + textToInsert + "\" inserted successfully.");
@@ -51,7 +51,7 @@
   }
   
   function insertCustom() {
-    var textToInsert = $('#textToInsert').val();
+    const textToInsert = $('#textToInsert').val();
     insertText(textToInsert);
   }
 })();

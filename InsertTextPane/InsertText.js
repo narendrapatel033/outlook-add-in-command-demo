@@ -6,8 +6,8 @@
   "use strict";
 
   // The Office initialize function must be run each time a new page is loaded
-  Office.initialize = function (reason) {
-      $(document).ready(function () {
+  Office.initialize =  (reason) => {
+      $(document).ready( () => {
           app.initialize();
 
           $('#insertText').click(insertText);
@@ -25,6 +25,9 @@
         // Display the result to the user
         if (asyncResult.status == Office.AsyncResultStatus.Succeeded) {
           app.showNotification("Success", "\"" + textToInsert + "\" inserted successfully.");
+        }
+        else if (asyncResult.status == Office.AsyncResultStatus.InProgress) {
+          app.showNotification("In Progress", "\"" + textToInsert + "\" reviewing successfully.");
         }
         else {
           app.showNotification("Error", "Failed to insert \"" + textToInsert + "\": " + asyncResult.error.message);
